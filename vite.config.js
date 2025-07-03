@@ -1,8 +1,16 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  base: '/React-Vat-Calculator/'
-})
+export default defineConfig(({ mode }) => {
+  const envBase = process.env.BASE_PATH;
+
+  return {
+    plugins: [react()],
+    base:
+      envBase !== undefined
+        ? envBase || './'
+        : mode === 'production'
+        ? '/React-Vat-Calculator/' 
+        : '/', 
+  };
+});
